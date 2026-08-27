@@ -1,90 +1,96 @@
 package domain;
 
+import java.time.format.DateTimeFormatter;
+
+
 public class ClinicHistory {
 
-    private Integer idClinicHistory;
-    private String date;
-    private Pets pets;
-    private DoctorVet doctorVet;
-    private String diagnosis;
-    private String treatmen;
-    private String observations;
+    private Integer idAppointment;
+    private DateTimeFormatter date;
+    private String subjective;
+    private String objective;
+    private String interpretation;
+    private String plan;
+    private String observation;
+    private Doctor doctor;
 
     public ClinicHistory(){
 
     }
 
-    public ClinicHistory(Integer idClinicHistory, String date, Pets pets, DoctorVet doctorVet, String diagnosis, String treatmen, String observations) {
-        this.idClinicHistory = idClinicHistory;
+    public ClinicHistory(Integer idAppointment, DateTimeFormatter date, String subjective, String objective, String interpretation, String plan, String observation, Doctor doctor) {
+        this.idAppointment = idAppointment;
         this.date = date;
-        this.pets = pets;
-        this.doctorVet = doctorVet;
-        this.diagnosis = diagnosis;
-        this.treatmen = treatmen;
-        this.observations = observations;
+        this.subjective = subjective;
+        this.objective = objective;
+        this.interpretation = interpretation;
+        this.plan = plan;
+        this.observation = observation;
+        this.doctor = doctor;
     }
 
-    public Integer getIdClinicHistory() {
-        return idClinicHistory;
+    public Integer getIdAppointment() {
+        return idAppointment;
     }
 
-    public String getDate() {
+    public DateTimeFormatter getDate() {
         return date;
     }
 
-    public Pets getPets() {
-        return pets;
+    public String getSubjective() {
+        return subjective;
     }
 
-    public DoctorVet getDoctorVet() {
-        return doctorVet;
+    public String getObjective() {
+        return objective;
     }
 
-    public String getDiagnosis() {
-        return diagnosis;
+    public String getInterpretation() {
+        return interpretation;
     }
 
-    public String getTreatmen() {
-        return treatmen;
+    public String getPlan() {
+        return plan;
     }
 
-    public String getObservations() {
-        return observations;
+    public String getObservation() {
+        return observation;
     }
 
-
-    public void setIdClinicHistory(Integer idClinicHistory) {
-        this.idClinicHistory = idClinicHistory;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDate(String date) {
+    public void setIdAppointment(Integer idAppointment) {
+        this.idAppointment = idAppointment;
+    }
+
+    public void setDate(DateTimeFormatter date) {
         this.date = date;
     }
 
-    public void setPets(Pets pets) {
-        this.pets = pets;
+    public void setSubjective(String subjective) {
+        this.subjective = subjective;
     }
 
-    public void setDoctorVet(DoctorVet doctorVet) {
-        this.doctorVet = doctorVet;
+    public void setObjective(String objective) {
+        this.objective = objective;
     }
 
-    public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
+    public void setInterpretation(String interpretation) {
+        this.interpretation = interpretation;
     }
 
-    public void setTreatmen(String treatmen) {
-        this.treatmen = treatmen;
+    public void setPlan(String plan) {
+        this.plan = plan;
     }
 
-    public void setObservations(String observations) {
-        this.observations = observations;
+    public void setObservation(String observation) {
+        this.observation = observation;
     }
 
-
-
-    public void create(){
-
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public void selectAll(){
