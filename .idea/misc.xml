@@ -4,19 +4,11 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-<<<<<<< HEAD
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="corretto-25" project-jdk-type="JavaSDK">
-=======
-        <option value="$PROJECT_DIR$/VeterinAPP-master/pom.xml" />
-      </list>
-    </option>
-  </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="corretto-26" project-jdk-type="JavaSDK">
->>>>>>> 776cc58 (creacion de las clases Admin , Tutor y Pets por Darlan Muriel)
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
