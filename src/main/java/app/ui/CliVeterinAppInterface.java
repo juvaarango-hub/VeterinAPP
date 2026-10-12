@@ -6,15 +6,18 @@ public class CliVeterinAppInterface {
 
     private final TutorUI tutorUI;
     private final PetsUI petsUI;
+    private final DoctorUI doctorUI;
     private final Scanner scanner;
 
     public CliVeterinAppInterface(
             TutorUI tutorUI,
             PetsUI petsUI,
+            DoctorUI doctorUI,
             Scanner scanner
     ) {
         this.tutorUI = tutorUI;
         this.petsUI = petsUI;
+        this.doctorUI = doctorUI;
         this.scanner = scanner;
     }
 
@@ -29,6 +32,7 @@ public class CliVeterinAppInterface {
             System.out.println("\n--- MENÚ PRINCIPAL ---");
             System.out.println("1. Gestionar tutores");
             System.out.println("2. Gestionar mascotas");
+            System.out.println("3. Gestionar doctores");
             System.out.println("0. Salir");
             System.out.print("Seleccione una opción: ");
 
@@ -41,6 +45,10 @@ public class CliVeterinAppInterface {
 
                 case 2:
                     petsMenu();
+                    break;
+
+                case 3:
+                    doctorUI.handleDoctorMenu(); // O un método doctorMenu() que delegue a esto
                     break;
 
                 case 0:
