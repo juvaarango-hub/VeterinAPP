@@ -1,4 +1,4 @@
-package domain;
+package app.domain;
 
 import java.sql.Time;
 import java.util.Date;
