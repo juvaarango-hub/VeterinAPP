@@ -4,6 +4,7 @@ import app.domain.Pets;
 import app.domain.Tutor;
 import app.service.inputports.PetsService;
 import app.service.inputports.TutorService;
+import app.service.validators.DataTypeValidator;
 import app.view.PetsView;
 import app.view.TutorView;
 import java.util.List;
@@ -14,17 +15,57 @@ public class PetsUI {
     private final TutorService tutorService;
     private final PetsView petsView;
     private final TutorView tutorView;
+    private final DataTypeValidator dataTypeValidator;
 
-    public PetsUI(
-            PetsService petsService,
-            TutorService tutorService,
-            PetsView petsView,
-            TutorView tutorView
+
+    public PetsUI(PetsService petsService, TutorService tutorService, PetsView petsView, TutorView tutorView, DataTypeValidator dataTypeValidator
     ) {
         this.petsService = petsService;
         this.tutorService = tutorService;
         this.petsView = petsView;
         this.tutorView = tutorView;
+        this.dataTypeValidator = dataTypeValidator;
+    }
+
+
+    public void handlePetsMenu() {
+        int option;
+
+        do {
+            System.out.println("\n--- GESTIÓN DE MASCOTAS ---");
+            System.out.println("1. Registrar mascota");
+            System.out.println("2. Buscar mascota por ID");
+            System.out.println("3. Listar mascotas");
+            System.out.println("4. Actualizar mascota");
+            System.out.println("5. Eliminar mascota");
+            System.out.println("0. Volver al menú principal");
+
+            option = dataTypeValidator.validateInt("Seleccione una opción: ");
+
+            switch (option) {
+                case 1:
+                    registerPet();
+                    break;
+                case 2:
+                    findPetById();
+                    break;
+                case 3:
+                    listPets();
+                    break;
+                case 4:
+                    updatePet();
+                    break;
+                case 5:
+                    deletePet();
+                    break;
+                case 0:
+                    System.out.println("Volviendo al menú principal...");
+                    break;
+                default:
+                    System.out.println("Seleccione una opción válida.");
+            }
+
+        } while (option != 0);
     }
 
     public void registerPet() {

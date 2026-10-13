@@ -9,11 +9,7 @@ public class CliVeterinAppInterface {
     private final DoctorUI doctorUI;
     private final Scanner scanner;
 
-    public CliVeterinAppInterface(
-            TutorUI tutorUI,
-            PetsUI petsUI,
-            DoctorUI doctorUI,
-            Scanner scanner
+    public CliVeterinAppInterface(TutorUI tutorUI, PetsUI petsUI, DoctorUI doctorUI, Scanner scanner
     ) {
         this.tutorUI = tutorUI;
         this.petsUI = petsUI;
@@ -34,21 +30,20 @@ public class CliVeterinAppInterface {
             System.out.println("2. Gestionar mascotas");
             System.out.println("3. Gestionar doctores");
             System.out.println("0. Salir");
-            System.out.print("Seleccione una opción: ");
 
             option = readOption();
 
             switch (option) {
                 case 1:
-                    tutorMenu();
+                    tutorUI.handleTutorMenu();
                     break;
 
                 case 2:
-                    petsMenu();
+                    petsUI.handlePetsMenu();
                     break;
 
                 case 3:
-                    doctorUI.handleDoctorMenu(); // O un método doctorMenu() que delegue a esto
+                    doctorUI.handleDoctorMenu();
                     break;
 
                 case 0:
@@ -62,107 +57,20 @@ public class CliVeterinAppInterface {
         } while (option != 0);
     }
 
-    private void tutorMenu() {
-        int option;
-
-        do {
-            System.out.println("\n--- GESTIÓN DE TUTORES ---");
-            System.out.println("1. Registrar tutor");
-            System.out.println("2. Buscar tutor por identificación");
-            System.out.println("3. Listar tutores");
-            System.out.println("4. Actualizar tutor");
-            System.out.println("5. Eliminar tutor");
-            System.out.println("0. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
-
-            option = readOption();
-
-            switch (option) {
-                case 0:
-                    System.out.println("Volviendo al menú principal...");
-                    break;
-
-                case 1:
-                    tutorUI.registerTutor();
-                    break;
-
-                case 2:
-                    tutorUI.findTutorById();
-                    break;
-
-                case 3:
-                    tutorUI.listTutors();
-                    break;
-
-                case 4:
-                    tutorUI.updateTutor();
-                    break;
-
-                case 5:
-                    tutorUI.deleteTutor();
-                    break;
-
-                default:
-                    System.out.println("Seleccione una opción válida.");
-            }
-
-        } while (option != 0);
-    }
-
-    private void petsMenu() {
-        int option;
-
-        do {
-            System.out.println("\n--- GESTIÓN DE MASCOTAS ---");
-            System.out.println("1. Registrar mascota");
-            System.out.println("2. Buscar mascota por ID");
-            System.out.println("3. Listar mascotas");
-            System.out.println("4. Actualizar mascota");
-            System.out.println("5. Eliminar mascota");
-            System.out.println("0. Volver al menú principal");
-            System.out.print("Seleccione una opción: ");
-
-            option = readOption();
-
-            switch (option) {
-                case 0:
-                    System.out.println("Volviendo al menú principal...");
-                    break;
-
-                case 1:
-                    petsUI.registerPet();
-                    break;
-
-                case 2:
-                    petsUI.findPetById();
-                    break;
-
-                case 3:
-                    petsUI.listPets();
-                    break;
-
-                case 4:
-                    petsUI.updatePet();
-                    break;
-
-                case 5:
-                    petsUI.deletePet();
-                    break;
-
-                default:
-                    System.out.println("Seleccione una opción válida.");
-            }
-
-        } while (option != 0);
-    }
-
     private int readOption() {
-        String input = scanner.nextLine();
+        String input;
+
+        System.out.print("Seleccione una opción: ");
+        input = scanner.nextLine().trim();
 
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
+            System.out.println(
+                    "Error: ingrese un número entero válido."
+            );
             return -1;
         }
     }
 }
+

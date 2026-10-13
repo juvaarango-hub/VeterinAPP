@@ -8,8 +8,7 @@ public class Aplication {
 
     public static void main(String[] args) {
 
-        CliVeterinAppInterface application =
-                Config.getCliVeterinAppInterface();
+        CliVeterinAppInterface application = Config.getCliVeterinAppInterface();
 
         application.applicationInit();
     }

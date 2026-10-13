@@ -49,14 +49,14 @@ public class Config {
         TutorService tutorService = new TutorServiceImpl(tutorRepository, tutorValidator);
         ConfirmationHelper confirmationHelper = new ConfirmationHelper(dataTypeValidator);
         TutorView tutorView = new TutorView(tutorValidator, dataTypeValidator, confirmationHelper);
-        TutorUI tutorUI = new TutorUI(tutorService, tutorView);
+        TutorUI tutorUI = new TutorUI(tutorService, tutorView, dataTypeValidator);
 
         // MÓDULO DE MASCOTAS
         PetsRepository petsRepository = new PetsRepositoryImplCollection();
         PetsService petsService = new PetsServiceImpl(petsRepository);
         SelectPetSex selectPetSex = new SelectPetSex(dataTypeValidator);
         PetsView petsView = new PetsView(dataTypeValidator, selectPetSex, confirmationHelper);
-        PetsUI petsUI = new PetsUI(petsService, tutorService, petsView, tutorView);
+        PetsUI petsUI = new PetsUI(petsService, tutorService, petsView, tutorView, dataTypeValidator);
 
         // MÓDULO DE DOCTORES
         DoctorRepository doctorRepository = new DoctorRepositoryImplCollection();
@@ -64,8 +64,6 @@ public class Config {
         DoctorService doctorService = new DoctorServiceImpl(doctorRepository, doctorValidator);
         DoctorView doctorView = new DoctorView(doctorValidator, dataTypeValidator, confirmationHelper);
         DoctorUI doctorUI = new DoctorUI(doctorService, doctorView, dataTypeValidator);
-
-
 
 
         // INTERFAZ PRINCIPAL
