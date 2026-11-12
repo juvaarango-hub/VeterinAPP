@@ -7,14 +7,17 @@ public class CliVeterinAppInterface {
     private final TutorUI tutorUI;
     private final PetsUI petsUI;
     private final DoctorUI doctorUI;
+    private final AppointmentUI appointmentUI;
     private final Scanner scanner;
+    private final ClinicHistoryUI clinicHistoryUI;
 
-    public CliVeterinAppInterface(TutorUI tutorUI, PetsUI petsUI, DoctorUI doctorUI, Scanner scanner
-    ) {
+    public CliVeterinAppInterface(TutorUI tutorUI, PetsUI petsUI, DoctorUI doctorUI, AppointmentUI appointmentUI, ClinicHistoryUI clinicHistoryUI, Scanner scanner) {
         this.tutorUI = tutorUI;
         this.petsUI = petsUI;
         this.doctorUI = doctorUI;
+        this.appointmentUI = appointmentUI;
         this.scanner = scanner;
+        this.clinicHistoryUI = clinicHistoryUI;
     }
 
     public void applicationInit() {
@@ -29,6 +32,8 @@ public class CliVeterinAppInterface {
             System.out.println("1. Gestionar tutores");
             System.out.println("2. Gestionar mascotas");
             System.out.println("3. Gestionar doctores");
+            System.out.println("4. Gestionar citas");
+            System.out.println("5. Gestionar historias clínicas");
             System.out.println("0. Salir");
 
             option = readOption();
@@ -46,6 +51,13 @@ public class CliVeterinAppInterface {
                     doctorUI.handleDoctorMenu();
                     break;
 
+                case 4:
+                    appointmentUI.handleAppointmentMenu();
+                    break;
+                case 5:
+                    clinicHistoryUI.handleClinicHistoryMenu();
+                    break;
+
                 case 0:
                     System.out.println("Saliendo de VeterinAPP...");
                     break;
@@ -58,19 +70,14 @@ public class CliVeterinAppInterface {
     }
 
     private int readOption() {
-        String input;
-
         System.out.print("Seleccione una opción: ");
-        input = scanner.nextLine().trim();
+        String input = scanner.nextLine().trim();
 
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            System.out.println(
-                    "Error: ingrese un número entero válido."
-            );
+            System.out.println("Error: ingrese un número entero válido.");
             return -1;
         }
     }
 }
-

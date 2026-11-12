@@ -13,6 +13,3 @@ public class Aplication {
         application.applicationInit();
     }
 }
-
-
-
