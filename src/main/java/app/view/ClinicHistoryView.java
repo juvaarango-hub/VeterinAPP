@@ -4,6 +4,7 @@ import app.domain.Appointment;
 import app.domain.ClinicHistory;
 import app.domain.Doctor;
 import app.domain.Pets;
+import app.service.helpers.ConfirmationHelper;
 import app.service.validators.DataTypeValidator;
 
 import java.time.LocalDateTime;
@@ -12,13 +13,14 @@ import java.util.List;
 
 public class ClinicHistoryView {
 
-    private static final DateTimeFormatter DATE_TIME_FORMAT =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+    private static final DateTimeFormatter DATE_TIME_FORMAT = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
     private final DataTypeValidator dataTypeValidator;
+    private final ConfirmationHelper confirmationHelper;
 
-    public ClinicHistoryView(DataTypeValidator dataTypeValidator) {
+    public ClinicHistoryView(DataTypeValidator dataTypeValidator, ConfirmationHelper confirmationHelper) {
         this.dataTypeValidator = dataTypeValidator;
+        this.confirmationHelper = confirmationHelper;
     }
 
     public void showMessage(String message) {
@@ -44,8 +46,7 @@ public class ClinicHistoryView {
         showMessage("Cita: " + history.getAppointment().getIdAppointment());
         showMessage("Fecha: " + history.getDate().format(DATE_TIME_FORMAT));
         showMessage("Mascota: " + history.getAppointment().getPet().getName());
-        showMessage("Tutor: " + history.getAppointment().getPet().getTutor().getName()
-                + " " + history.getAppointment().getPet().getTutor().getLastName());
+        showMessage("Tutor: " + history.getAppointment().getPet().getTutor().getName() + " " + history.getAppointment().getPet().getTutor().getLastName());
         showMessage("Doctor: " + history.getDoctor().getName() + " " + history.getDoctor().getLastName());
         showMessage("Subjetivo: " + history.getSubjective());
         showMessage("Objetivo: " + history.getObjective());
@@ -59,6 +60,7 @@ public class ClinicHistoryView {
             showMessage("\nNo hay historias clínicas registradas.");
             return;
         }
+
         histories.forEach(this::showClinicHistory);
     }
 
@@ -70,6 +72,7 @@ public class ClinicHistoryView {
             showMessage("\nLa mascota todavía no tiene historias clínicas registradas.");
             return;
         }
+
         histories.forEach(this::showClinicHistory);
     }
 
@@ -78,29 +81,22 @@ public class ClinicHistoryView {
     }
 
     public boolean confirmClinicHistoryDeletion() {
-        while (true) {
-            String answer = dataTypeValidator
-                    .validateString("¿Está seguro de que desea eliminar la historia clínica? (s/n): ")
-                    .toLowerCase();
-            if (answer.equals("s") || answer.equals("si") || answer.equals("sí")) {
-                return true;
-            }
-            if (answer.equals("n") || answer.equals("no")) {
-                return false;
-            }
-            showMessage("Responda con s o n.");
-        }
+        return confirmationHelper.confirm("¿Está seguro de que desea eliminar la historia clínica?");
     }
 
     private ClinicHistory readFields(Appointment appointment, Doctor doctor) {
         LocalDateTime date = dataTypeValidator.validateDateTime("Fecha y hora de la atención (dd/MM/yyyy HH:mm): ");
+
         String subjective = dataTypeValidator.validateString("Subjetivo (motivo de consulta, lo que cuenta el tutor): ");
+
         String objective = dataTypeValidator.validateString("Objetivo (hallazgos del examen físico): ");
+
         String interpretation = dataTypeValidator.validateString("Interpretación (diagnóstico o análisis): ");
+
         String plan = dataTypeValidator.validateString("Plan (tratamiento y seguimiento): ");
+
         String observation = dataTypeValidator.validateString("Observaciones: ");
 
-        return new ClinicHistory(appointment, date, subjective, objective,
-                interpretation, plan, observation, doctor);
+        return new ClinicHistory(appointment, date, subjective, objective, interpretation, plan, observation, doctor);
     }
 }

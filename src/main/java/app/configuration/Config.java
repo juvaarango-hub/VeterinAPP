@@ -53,30 +53,26 @@ public class Config {
         AppointmentRepository appointmentRepository = new AppointmentRepositoryAdapterDB(dbConnection, petsRepository);
         AppointmentValidator appointmentValidator = new AppointmentValidator();
         AppointmentService appointmentService = new AppointmentServiceImpl(appointmentRepository, appointmentValidator);
-        AppointmentView appointmentView = new AppointmentView(dataTypeValidator);
+        AppointmentView appointmentView = new AppointmentView(dataTypeValidator, confirmationHelper);
         AppointmentUI appointmentUI = new AppointmentUI(appointmentService, petsService, appointmentView, petsView, dataTypeValidator);
 
-        // MÓDULO DE HISTORIAS CLÍNICAS
-        DoctorRepository doctorRepository = null;
-        ClinicHistoryRepository clinicHistoryRepository = new ClinicHistoryRepositoryAdapterDB(dbConnection, appointmentRepository, doctorRepository);
-        ClinicHistoryValidator clinicHistoryValidator = new ClinicHistoryValidator();
-        ClinicHistoryService clinicHistoryService = new ClinicHistoryServiceImpl(clinicHistoryRepository, clinicHistoryValidator);
-        ClinicHistoryView clinicHistoryView = new ClinicHistoryView(dataTypeValidator);
-        DoctorService doctorService = null;
-        ClinicHistoryUI clinicHistoryUI = new ClinicHistoryUI(clinicHistoryService, appointmentService, petsService, doctorService, clinicHistoryView, appointmentView, petsView, dataTypeValidator);
 
         // MÓDULO DE DOCTORES
-        doctorRepository = new DoctorRepositoryAdapterDB(dbConnection);
-        //DoctorRepository doctorRepository = new DoctorRepositoryImplCollection();
+        DoctorRepository doctorRepository = new DoctorRepositoryAdapterDB(dbConnection);
         DoctorValidator doctorValidator = new DoctorValidator();
-        doctorService = new DoctorServiceImpl(doctorRepository, doctorValidator);
+        DoctorService doctorService = new DoctorServiceImpl(doctorRepository, doctorValidator);
         DoctorView doctorView = new DoctorView(doctorValidator, dataTypeValidator, confirmationHelper);
         DoctorUI doctorUI = new DoctorUI(doctorService, doctorView, dataTypeValidator);
 
-
-
+        // MÓDULO DE HISTORIAS CLÍNICAS
+        ClinicHistoryRepository clinicHistoryRepository = new ClinicHistoryRepositoryAdapterDB(dbConnection, appointmentRepository, doctorRepository);
+        ClinicHistoryValidator clinicHistoryValidator = new ClinicHistoryValidator();
+        ClinicHistoryService clinicHistoryService = new ClinicHistoryServiceImpl(clinicHistoryRepository, clinicHistoryValidator);
+        ClinicHistoryView clinicHistoryView = new ClinicHistoryView(dataTypeValidator, confirmationHelper);
+        ClinicHistoryUI clinicHistoryUI = new ClinicHistoryUI(clinicHistoryService, appointmentService, petsService, doctorService, clinicHistoryView, appointmentView, petsView, dataTypeValidator);
 
         // INTERFAZ PRINCIPAL
         return new CliVeterinAppInterface(tutorUI, petsUI, doctorUI, appointmentUI, clinicHistoryUI, scanner);
+
     }
 }

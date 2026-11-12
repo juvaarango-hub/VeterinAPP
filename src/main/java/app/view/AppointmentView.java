@@ -2,6 +2,7 @@ package app.view;
 
 import app.domain.Appointment;
 import app.domain.Pets;
+import app.service.helpers.ConfirmationHelper;
 import app.service.validators.DataTypeValidator;
 
 import java.sql.Time;
@@ -12,9 +13,11 @@ import java.util.List;
 public class AppointmentView {
 
     private final DataTypeValidator dataTypeValidator;
+    private final ConfirmationHelper confirmationHelper;
 
-    public AppointmentView(DataTypeValidator dataTypeValidator) {
+    public AppointmentView(DataTypeValidator dataTypeValidator, ConfirmationHelper confirmationHelper) {
         this.dataTypeValidator = dataTypeValidator;
+        this.confirmationHelper = confirmationHelper;
     }
 
     public void showMessage(String message) {
@@ -27,8 +30,11 @@ public class AppointmentView {
 
     public Appointment requestAppointmentData(Pets pet) {
         showMessage("\n--- Datos de la cita ---");
+
         int id = requestAppointmentId();
+
         LocalDateTime dateTime = dataTypeValidator.validateDateTime("Fecha y hora de la cita (dd/MM/yyyy HH:mm): ");
+
         String direction = dataTypeValidator.validateString("Dirección: ");
         String observations = dataTypeValidator.validateString("Observaciones: ");
 
@@ -37,10 +43,13 @@ public class AppointmentView {
 
     public Appointment requestAppointmentUpdateData(Appointment existing, Pets pet) {
         showMessage("\n--- Nuevos datos de la cita ---");
+
         LocalDateTime dateTime = dataTypeValidator.validateDateTime("Fecha y hora de la cita (dd/MM/yyyy HH:mm): ");
+
         String direction = dataTypeValidator.validateString("Dirección: ");
         String observations = dataTypeValidator.validateString("Observaciones: ");
-        boolean state = confirm("¿La cita sigue activa? (s/n): ");
+
+        boolean state = confirmationHelper.confirm("¿La cita sigue activa?");
 
         return buildAppointment(existing.getIdAppointment(), dateTime, state, direction, observations, pet);
     }
@@ -54,6 +63,7 @@ public class AppointmentView {
         showMessage("Dirección: " + appointment.getDirection());
         showMessage("Observaciones: " + appointment.getObservations());
         showMessage("Mascota: " + appointment.getPet().getName());
+
         showMessage("Tutor: " + appointment.getPet().getTutor().getName()
                 + " " + appointment.getPet().getTutor().getLastName());
     }
@@ -63,6 +73,7 @@ public class AppointmentView {
             showMessage("\nNo hay citas registradas.");
             return;
         }
+
         appointments.forEach(this::showAppointment);
     }
 
@@ -71,26 +82,14 @@ public class AppointmentView {
     }
 
     public boolean confirmAppointmentDeletion() {
-        return confirm("¿Está seguro de que desea eliminar la cita? (s/n): ");
+        return confirmationHelper.confirm("¿Está seguro de que desea eliminar la cita?");
     }
 
-    private Appointment buildAppointment(int id, LocalDateTime dateTime, boolean state,
-                                         String direction, String observations, Pets pet) {
+    private Appointment buildAppointment(int id, LocalDateTime dateTime, boolean state, String direction, String observations, Pets pet) {
+
         Date date = java.sql.Date.valueOf(dateTime.toLocalDate());
         Time time = Time.valueOf(dateTime.toLocalTime());
-        return new Appointment(id, date, time, state, direction, observations, pet);
-    }
 
-    private boolean confirm(String prompt) {
-        while (true) {
-            String answer = dataTypeValidator.validateString(prompt).toLowerCase();
-            if (answer.equals("s") || answer.equals("si") || answer.equals("sí")) {
-                return true;
-            }
-            if (answer.equals("n") || answer.equals("no")) {
-                return false;
-            }
-            showMessage("Responda con s o n.");
-        }
+        return new Appointment(id, date, time, state, direction, observations, pet);
     }
 }
