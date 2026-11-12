@@ -16,14 +16,21 @@ public class Appointment {
 
     }
 
-    public Appointment(Integer idAppointment, Date date, Time time, Boolean state, String direction, String observations) {
+    private Pets pet;
+
+    public Appointment(Integer idAppointment, Date date, Time time, Boolean state,
+                       String direction, String observations, Pets pet) {
         this.idAppointment = idAppointment;
         this.date = date;
         this.time = time;
         this.state = state;
         this.direction = direction;
         this.observations = observations;
+        this.pet = pet;
     }
+
+    public Pets getPet() { return pet; }
+    public void setPet(Pets pet) { this.pet = pet; }
 
     public Integer getIdAppointment() {
         return idAppointment;

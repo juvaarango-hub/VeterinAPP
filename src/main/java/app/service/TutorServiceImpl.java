@@ -12,9 +12,7 @@ public class TutorServiceImpl implements TutorService {
     private final TutorRepository tutorRepository;
     private final TutorValidator tutorValidator;
 
-    public TutorServiceImpl(
-            TutorRepository tutorRepository,
-            TutorValidator tutorValidator) {
+    public TutorServiceImpl(TutorRepository tutorRepository, TutorValidator tutorValidator) {
         this.tutorRepository = tutorRepository;
         this.tutorValidator = tutorValidator;
     }

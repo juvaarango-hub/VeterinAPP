@@ -1,5 +1,8 @@
 package app.service.validators;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class DataTypeValidator {
@@ -51,7 +54,6 @@ public class DataTypeValidator {
             }
         }
     }
-
     // Solicita un número decimal de tipo float
     public float validateFloat(String prompt) {
         while (true) {
@@ -65,4 +67,21 @@ public class DataTypeValidator {
             }
         }
     }
+    private static final DateTimeFormatter DATE_TIME_FORMAT =
+            DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+
+    // Solicita fecha y hora
+    public LocalDateTime validateDateTime(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String value = scanner.nextLine().trim();
+
+            try {
+                return LocalDateTime.parse(value, DATE_TIME_FORMAT);
+            } catch (DateTimeParseException e) {
+                System.out.println("Error: use el formato dd/MM/yyyy HH:mm, por ejemplo 15/11/2026 09:30.");
+            }
+        }
+    }
+
 }
